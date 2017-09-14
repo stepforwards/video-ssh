@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.forward.video_ssh.model">
+	<class name="Video" table="video">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="videoTitle"></property>
+		<property name="speakerId"></property>
+		<property name="courseId"></property>
+		<property name="videoLength"></property>
+		<property name="videoImageUrl"></property>
+		<property name="videoUrl"></property>
+		<property name="videoDescr"></property>
+		<property name="insertTime"></property>
+		<property name="updateTime"></property>
+		<property name="videoPlayTimes"></property>
+		
+		<many-to-one name="speaker" class="Speaker" column="speakerId"  insert="false" update="false"></many-to-one>
+		<many-to-one name="course" class="Course" column="courseId"  insert="false" update="false"></many-to-one>
+		
+	</class>
+</hibernate-mapping>

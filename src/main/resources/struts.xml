@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+	<constant name="struts.i18n.encoding" value="UTF-8"></constant>
+	<constant name="struts.action.extension" value="action"></constant>
+	<constant name="struts.devMode" value="true"></constant>
+	
+	<package name="default-struts" extends="struts-default">
+		<global-results>
+				<!-- 
+					adminAction
+				 -->
+				<result name="toLogin">/WEB-INF/view/admin/indexBackstage.jsp</result>
+				<result name="exit" type="redirect">/index.jsp</result>
+				
+				<!-- 
+					adminVideoAction
+				 -->
+				<result name="toVideoAction" type="redirectAction">
+					<param name="namespace">/video</param>
+					<param name="actionName">videoManagementList.action</param>
+				</result>
+				<result name="toVideo">/WEB-INF/view/video/videoManagementList.jsp</result>
+				<result name="toAddVideo">/WEB-INF/view/video/addVideo.jsp</result>
+				<result name="toEditorVideoInfo">/WEB-INF/view/video/editorVideoInfo.jsp</result>
+				
+				<!-- 
+					AdminSpeakerAction
+				 -->
+				<result name="toSpeakerManagementList">/WEB-INF/view/speaker/speakerManagementList.jsp</result>
+				<result name="toAddSpeaker">/WEB-INF/view/speaker/addSpeaker.jsp</result>
+				<result name="toSpeakerManagementListAction" type="redirectAction">
+					<param name="namespace">/speaker</param>
+					<param name="actionName">speakerManagementList.action</param>
+				</result>
+				<result name="toEditorSpeaker">/WEB-INF/view/speaker/editorSpeaker.jsp</result>
+				
+				<!-- 
+					AdminCourseAction
+				 -->
+				<result name="toCourseManagementList">/WEB-INF/view/course/courseManagementList.jsp</result>
+				<result name="toAddCourse">/WEB-INF/view/course/addCourse.jsp</result>
+				<result name="toCourseManagementListAction" type="redirectAction">
+					<param name="namespace">/course</param>
+					<param name="actionName">courseManagementList.action</param>
+				</result>
+				<result name="toEditorCourse">/WEB-INF/view/course/editorCourse.jsp</result>
+				
+				<!-- 
+					AdminStatisticalAction
+				 -->
+				<result name="toStatisticalAnalysis">/WEB-INF/view/statistical/statisticalAnalysis.jsp</result>
+				
+				<!-- 
+					FrontIndexAction
+				 -->
+				<result name="toIndex">/WEB-INF/view/front/index.jsp</result>
+				
+				<!-- 
+					FrontCourseAction
+				 -->
+				<result name="toCourseIndex">/WEB-INF/view/front/course/index.jsp</result>
+				
+				<!-- 
+					FrontVideoAction
+				 -->
+				<result name="toVideoIndex">/WEB-INF/view/front/video/index.jsp</result>
+				<result name="toVideoContent">/WEB-INF/view/front/video/content.jsp</result>
+				
+				<!-- 
+					FrontUserActionAjax
+				 -->
+				
+				
+		</global-results>
+	</package>
+	
+	<!-- 
+		Admin
+	 -->
+	<package name="AdminAction" namespace="/admin" extends="default-struts">
+		<action name="*" class="AdminAction" method="{1}" />
+	</package>
+	
+	<package name="AdminVideoAction" namespace="/video" extends="default-struts">
+		<action name="*" class="AdminVideoAction" method="{1}" />
+	</package>
+	
+	<package name="AdminSpeakerAction" namespace="/speaker" extends="default-struts">
+		<action name="*" class="AdminSpeakerAction" method="{1}" />
+	</package>
+	
+	<package name="AdminCourseAction" namespace="/course" extends="default-struts">
+		<action name="*" class="AdminCourseAction" method="{1}" />
+	</package>
+	
+	<package name="AdminStatisticalAction" namespace="/statistical" extends="default-struts">
+		<action name="*" class="AdminStatisticalAction" method="{1}" />
+	</package>
+	
+	<!-- 
+		Front
+	 -->
+	<package name="FrontIndexAction" namespace="/front" extends="default-struts">
+		<action name="*" class="FrontIndexAction" method="{1}" />
+	</package>
+	
+	<package name="FrontCourseAction" namespace="/front/course" extends="default-struts">
+		<action name="*" class="FrontCourseAction" method="{1}" />
+	</package>
+	
+	<package name="FrontVideoAction" namespace="/front/video" extends="default-struts">
+		<action name="*" class="FrontVideoAction" method="{1}" />
+	</package>
+	
+	<package name="FrontUserActionAjax" namespace="/front/user" extends="json-default">
+		<action name="login" class="FrontUserAction" method="login" >
+			<result name="resultJsonL" type="json">
+					<param name="root">result</param>
+			</result>
+		</action>
+		<!-- <action name="login" class="FrontUserAction" method="login" >
+			<result name="resultJsonR" type="json">
+					<param name="root">result</param>
+			</result>
+		</action> -->
+	
+	</package>
+	
+</struts>

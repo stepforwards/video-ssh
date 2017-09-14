@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.forward.video_ssh.model">
+	<class name="User" table="user">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="nickName"></property>
+		<property name="sex"></property>
+		<property name="birthday"></property>
+		<property name="email"></property>
+		<property name="province"></property>
+		<property name="city"></property>
+		<property name="headUrl"></property>
+		<property name="password"></property>
+		<property name="insertTime"></property>
+		<property name="updateTime"></property>
+		<property name="captcha"></property>
+	</class>
+</hibernate-mapping>

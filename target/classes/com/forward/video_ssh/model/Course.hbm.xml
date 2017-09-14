@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.forward.video_ssh.model">
+	<class name="Course" table="course" lazy="false">
+		<id name="id">
+			<generator class="native"></generator>
+		</id>
+		<property name="courseName"></property>
+		<property name="courseDescr"></property>
+		<property name="insertTime"></property>
+		<property name="updateTime"></property>
+		<property name="subjectId"></property>
+		
+		<set name="videoSet" cascade="save-update" inverse="true">
+			<key column="courseId"></key>
+			<one-to-many class="Video"/>
+		</set>
+		<many-to-one name="subject" class="Subject" column="subjectId"  insert="false" update="false"></many-to-one>
+	</class>
+</hibernate-mapping>
