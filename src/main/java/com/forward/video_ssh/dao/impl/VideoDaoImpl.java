@@ -2,9 +2,13 @@ package com.forward.video_ssh.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -24,25 +28,17 @@ public class VideoDaoImpl extends HibernateDaoSupport implements VideoDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Video> selectVideoListByKey(KeyVO kvo) {
-		String hql = "from Video where videoTitle like ?";
-		Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
-		Query query = null;
+		DetachedCriteria dc = DetachedCriteria.forClass(Video.class)
+				.add(Restrictions.like("videoTitle", kvo.getVideoTitle(),MatchMode.ANYWHERE));
 		if(kvo.getCourse() != null && kvo.getSpeaker() != null){
-			hql += "and courseId = ? and speakerId = ?";
-			query = session.createQuery(hql).setParameter(0, "%"+kvo.getVideoTitle()+"%").setParameter(1, kvo.getCourse()).setParameter(2, kvo.getSpeaker());
+			dc.add(Restrictions.eq("speakerId", kvo.getSpeaker())).add(Restrictions.eq("courseId", kvo.getCourse()));
 		}else if(kvo.getSpeaker() != null){
-			hql += "and speakerId = ?";
-			query = session.createQuery(hql).setParameter(0, "%"+kvo.getVideoTitle()+"%").setParameter(1, kvo.getSpeaker());
+			dc.add(Restrictions.eq("speakerId", kvo.getSpeaker()));
 		}else if(kvo.getCourse() != null){
-			hql += "and courseId = ?";
-			query = session.createQuery(hql).setParameter(0, "%"+kvo.getVideoTitle()+"%").setParameter(1, kvo.getCourse());
-		}else{
-			query = session.createQuery(hql).setParameter(0, "%"+kvo.getVideoTitle()+"%");
+			dc.add(Restrictions.eq("courseId", kvo.getCourse()));
 		}
-	 	return query
-	 			.setFirstResult(kvo.getCurrentStrip())
-	 			.setMaxResults(5)
-	 			.list();
+		Criteria criteria = dc.getExecutableCriteria(getHibernateTemplate().getSessionFactory().getCurrentSession());
+		return criteria.setFirstResult(kvo.getCurrentStrip()).setMaxResults(5).list();
 	}
 
 	@Override
@@ -128,6 +124,9 @@ public class VideoDaoImpl extends HibernateDaoSupport implements VideoDao {
 		}
 		Long count = (Long) query.uniqueResult();
 	 	return count.intValue();
+		
+		
+	 	
 	}
 
 	@SuppressWarnings("unchecked")
@@ -146,6 +145,12 @@ public class VideoDaoImpl extends HibernateDaoSupport implements VideoDao {
 	public List<Video> selectVideoByCourseIds(Integer courseId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void updateVideoStateById(String videoId) {
+		Video video = getHibernateTemplate().get(Video.class,Integer.parseInt(videoId));
+		video.setVideoPlayTimes(video.getVideoPlayTimes()+1);
 	}
 
 }

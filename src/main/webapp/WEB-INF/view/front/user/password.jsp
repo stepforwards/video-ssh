@@ -50,7 +50,7 @@
 				                <strong>${message}</strong>
 				            </div>
 				            </c:if>
-                            <form class="updataPwd" action="<c:url value="/front/user/password.action"/>" method="post">
+                            <form class="updataPwd" action="<c:url value="/front/user/updatePassword.action"/>" method="post">
                                 <div class="form_group">
                                     <span class="dd">旧&#x3000;密&#x3000;码：</span>
                                     <input type="password" id="oldPassword" name="oldPassword"><span style="color: red;">${pwdmsg }</span>

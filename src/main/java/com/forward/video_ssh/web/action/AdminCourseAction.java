@@ -71,17 +71,4 @@ public class AdminCourseAction extends ActionSupport implements ModelDriven<Cour
 		return "toCourseManagementListAction";
 	}
 	
-/*	
-	
-	
-	
-	@RequestMapping(value="/deleteCourseById.action",method=RequestMethod.GET)
-	public String deleteCourseById(String id){
-		cs.deleteCourseById(id);
-		return "redirect:/course/courseManagementList.action";
-	}
-	
-	
-
-	}*/
 }

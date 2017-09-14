@@ -2,6 +2,8 @@ package com.forward.video_ssh.model;
 
 import java.util.Date;
 
+import com.forward.video_ssh.utils.VideoLengthFormatUtil;
+
 public class Video {
     private Integer id;
 
@@ -98,8 +100,8 @@ public class Video {
         this.courseId = courseId;
     }
 
-    public Integer getVideoLength() {
-        return videoLength;
+    public String getVideoLength() {
+        return VideoLengthFormatUtil.formatTimeLength(videoLength);
     }
 
     public void setVideoLength(Integer videoLength) {

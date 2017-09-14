@@ -124,11 +124,11 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : MyMD5Util.MD5Encrypt(password.trim());
+        this.password = password == null ? null : password.trim();
     }
     
     public void setPwdNMD5(String password) {
-    	this.password = password == null ? null : password.trim();
+    	this.password = password == null ? null : MyMD5Util.MD5Encrypt(password.trim());
     }
 
     public Date getInsertTime() {

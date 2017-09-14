@@ -18,7 +18,7 @@ public interface VideoDao {
 
     int insertSelective(Video record);
 
-  List<Video> selectByExample();
+    List<Video> selectByExample();
 
     Video selectByPrimaryKey(Integer id);
 
@@ -39,4 +39,6 @@ public interface VideoDao {
 	Video selectVideoByIdAllInfo(Video video);
 
 	List<Video> selectVideoByCourseIds(Integer courseId);
+
+	void updateVideoStateById(String videoId);
 }

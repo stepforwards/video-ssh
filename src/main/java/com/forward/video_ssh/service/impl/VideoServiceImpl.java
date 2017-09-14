@@ -70,7 +70,7 @@ public class VideoServiceImpl implements VideoService {
 
 	@Override
 	public void updateVideoStateById(String videoId) {
-		// TODO Auto-generated method stub
+		vd.updateVideoStateById(videoId);
 		
 	}
 

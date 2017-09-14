@@ -52,8 +52,6 @@ public class FrontVideoAction extends ActionSupport implements ModelDriven<Video
 	
 	public String index(){
 		ActionContext.getContext().put("subject", ss.selectSubjectById(subjectId));
-		//m.addAttribute("subject", ss.selectSubjectById(vsvo.getSubjectId()));
-		//m.addAttribute("videoId", vsvo.getVideoId());
 		return "toVideoIndex";
 	}
 	

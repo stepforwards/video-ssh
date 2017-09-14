@@ -24,7 +24,7 @@
     </header>
     <main>
         <div class="container">
-            <form class="ma" action="<c:url value="/front/user/forgetpwd.action"/>" method="post" >
+            <form class="ma" action="<c:url value="/front/user/doForgetpwd.action"/>" method="post" >
                 <div class="form_header">
                     <div class="form_title">
                         <h2>忘记密码</h2>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="form_body">
-                    <input type="email" placeholder="请输入登录邮箱" name="email" id="email">
+                    <input type="email" placeholder="请输入登录邮箱" name="email" id="email" value="${email }">
                     <input type="text" placeholder="请输入验证码" name="captcha"><input type="button" value="发邮件获取验证码" onclick="submitEmail();">
                     <span style="color: red;">${msg }</span>
                     <input type="submit" value="提交">
@@ -55,7 +55,7 @@
 			var email = $('#email').val();
 			//改为ajax提交邮箱
 			if(email!=null&&email!=''){
-				$.post('/video/front/user/sendemail.action',{email:email},function(data){
+				$.post('/video-ssh/front/user/sendemail.action',{email:email},function(data){
 					console.log(data);
 					if(data.success){
 						alert('验证码已发送到邮箱，请注意查收');

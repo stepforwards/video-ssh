@@ -8,7 +8,11 @@
 	<constant name="struts.action.extension" value="action"></constant>
 	<constant name="struts.devMode" value="true"></constant>
 	
+	<!-- interceptors -->
+	
+	
 	<package name="default-struts" extends="struts-default">
+		
 		<global-results>
 				<!-- 
 					adminAction
@@ -49,38 +53,45 @@
 				</result>
 				<result name="toEditorCourse">/WEB-INF/view/course/editorCourse.jsp</result>
 				
-				<!-- 
-					AdminStatisticalAction
-				 -->
+				<!-- AdminStatisticalAction -->
 				<result name="toStatisticalAnalysis">/WEB-INF/view/statistical/statisticalAnalysis.jsp</result>
 				
-				<!-- 
-					FrontIndexAction
-				 -->
+				<!-- FrontIndexAction -->
 				<result name="toIndex">/WEB-INF/view/front/index.jsp</result>
 				
-				<!-- 
-					FrontCourseAction
-				 -->
+				<!-- FrontCourseAction -->
 				<result name="toCourseIndex">/WEB-INF/view/front/course/index.jsp</result>
 				
-				<!-- 
-					FrontVideoAction
-				 -->
+				<!-- FrontVideoAction -->
 				<result name="toVideoIndex">/WEB-INF/view/front/video/index.jsp</result>
 				<result name="toVideoContent">/WEB-INF/view/front/video/content.jsp</result>
 				
-				<!-- 
-					FrontUserActionAjax
-				 -->
-				
-				
+				<!-- FrontUserAction -->
+				<result name="toForget_pwd">/WEB-INF/view/front/user/forget_pwd.jsp</result>
+				<result name="toReset_Pwd">/WEB-INF/view/front/user/reset_pwd.jsp</result>
+				<result name="toUserIndex">/WEB-INF/view/front/user/index.jsp</result>
+				<result name="toUserProfile">/WEB-INF/view/front/user/profile.jsp</result>
+				<result name="toUserPwd">/WEB-INF/view/front/user/password.jsp</result>
+				<result name="toUserAvatar">/WEB-INF/view/front/user/avatar.jsp</result>
+				<result name="toLogout" type="redirectAction">
+					<param name="namespace">/front</param>
+					<param name="actionName">indexFront</param>
+				</result>
+				<result name="toIndexR" type="redirectAction">
+					<param name="namespace">/front</param>
+					<param name="actionName">indexFront</param>
+				</result>
+				<result name="toUserProfileR" type="redirectAction" >
+					<param name="namespace">/front/user</param>
+					<param name="actionName">profile</param>
+				</result>
 		</global-results>
+		
 	</package>
 	
-	<!-- 
-		Admin
-	 -->
+	
+	
+	<!-- Admin -->
 	<package name="AdminAction" namespace="/admin" extends="default-struts">
 		<action name="*" class="AdminAction" method="{1}" />
 	</package>
@@ -101,9 +112,7 @@
 		<action name="*" class="AdminStatisticalAction" method="{1}" />
 	</package>
 	
-	<!-- 
-		Front
-	 -->
+	<!-- Front -->
 	<package name="FrontIndexAction" namespace="/front" extends="default-struts">
 		<action name="*" class="FrontIndexAction" method="{1}" />
 	</package>
@@ -116,18 +125,28 @@
 		<action name="*" class="FrontVideoAction" method="{1}" />
 	</package>
 	
+	<package name="FrontUserAction" namespace="/front/user" extends="default-struts">
+		<action name="*" class="FrontUserAction" method="{1}" />
+	</package>
+	
+	
+	
 	<package name="FrontUserActionAjax" namespace="/front/user" extends="json-default">
 		<action name="login" class="FrontUserAction" method="login" >
 			<result name="resultJsonL" type="json">
 					<param name="root">result</param>
 			</result>
 		</action>
-		<!-- <action name="login" class="FrontUserAction" method="login" >
+		<action name="regist" class="FrontUserAction" method="regist" >
 			<result name="resultJsonR" type="json">
 					<param name="root">result</param>
 			</result>
-		</action> -->
-	
+		</action>
+		<action name="sendemail" class="FrontUserAction" method="sendemail" >
+			<result name="data" type="json">
+					<param name="root">data</param>
+			</result>
+		</action>
 	</package>
 	
 </struts>

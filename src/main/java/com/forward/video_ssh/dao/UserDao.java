@@ -9,7 +9,7 @@ public interface UserDao {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(User record);
+    void insert(User user);
 
     int insertSelective(User record);
 
@@ -26,4 +26,16 @@ public interface UserDao {
     int updateByPrimaryKey(User record);
 
 	User selectEmailByExample(User u);
+
+	void updateUserCaptcha(User u);
+
+	User captchaEqual(User u);
+
+	void ResetPwd(User u);
+
+	User updateProfile(User u);
+
+	User updatePwd(User u);
+
+	User updateAvatarInfo(User user);
 }

@@ -14,9 +14,12 @@ public interface UserService {
 
 	void resetPwd(User u);
 
-	User updataProfile(User u);
+	User updateProfile(User u);
 
-	boolean updataPwd(User u);
+	boolean updatePwd(User u);
 
-	User updataAvatar(User u);
+	User updateAvatar(User u);
+
+	User updateAvatarInfo(User user);
+
 }

@@ -41,7 +41,7 @@
                             </c:if>
                         </div>
                         <div class="profile_ifo_area">
-                            <form action="<c:url value="/front/user/profile.action"/>" method="post">
+                            <form action="<c:url value="/front/user/updateProfile.action"/>" method="post">
                                 <div class="form_group">
                                     <span class="dd">昵&#x3000;称：</span>
                                     <input type="text" name="nickName" value="${user.nickName}" >

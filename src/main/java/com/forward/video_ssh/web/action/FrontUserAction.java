@@ -1,10 +1,17 @@
 package com.forward.video_ssh.web.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+
+import com.forward.video_ssh.model.Data;
 import com.forward.video_ssh.model.Result;
 import com.forward.video_ssh.model.User;
 import com.forward.video_ssh.service.UserService;
@@ -20,9 +27,38 @@ public class FrontUserAction extends ActionSupport implements ModelDriven<User>{
 	@Autowired
 	UserService us;
 	
-	private Result result = new Result();
 	private User user = new User();
+	private Result result = new Result();
+	private Data data = new Data();
+	private File image_file;
+	private String image_fileFileName;
+	private String image_fileContentType;
 	
+	
+	public Data getData() {
+		return data;
+	}
+	public void setData(Data data) {
+		this.data = data;
+	}
+	public File getImage_file() {
+		return image_file;
+	}
+	public void setImage_file(File image_file) {
+		this.image_file = image_file;
+	}
+	public String getImage_fileFileName() {
+		return image_fileFileName;
+	}
+	public void setImage_fileFileName(String image_fileFileName) {
+		this.image_fileFileName = image_fileFileName;
+	}
+	public String getImage_fileContentType() {
+		return image_fileContentType;
+	}
+	public void setImage_fileContentType(String image_fileContentType) {
+		this.image_fileContentType = image_fileContentType;
+	}
 	public Result getResult() {
 		return result;
 	}
@@ -36,111 +72,98 @@ public class FrontUserAction extends ActionSupport implements ModelDriven<User>{
 	}
 	
 	public String login(){
-		System.out.println(1);
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		user = us.userLogin(user);
 		result.setSuccess(user == null ? false : true);
 		result.setMessage("用户名或密码错误！");
 		session.put("_front_user", user);
 		session.put("user", user);
-		System.out.println(2);
 		return "resultJsonL";
 	}
 	
 	public String regist(){
-		Result result = new Result();
 		result.setSuccess(us.userRegist(user));
 		result.setMessage("该邮箱已注册！");
 		return "resultJsonR";
 	}
 	
-	/*	
-	
-	
-	@RequestMapping("/logout.action")
-	public String userLogout(HttpSession session){
-		session.invalidate();
-		return "redirect:/front/indexFront.action";
+	public String logout(){
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		session.remove("_front_user");
+		session.remove("user");
+		return "toLogout";
 	}
 	
-	
-	@RequestMapping(value="/forgetpwd.action",method=RequestMethod.GET)
-	public String userForgetpwd(){
-		return "/front/user/forget_pwd";
+	public String forgetpwd(){
+		return "toForget_pwd";
 	}
 	
-	@RequestMapping(value="/forgetpwd.action",method=RequestMethod.POST)
-	public String captchaEqual(User u,Model m){
-		if(us.captchaEqual(u)){
-			m.addAttribute("email", u.getEmail());
-			m.addAttribute("captcha", u.getCaptcha());
-			return "/front/user/reset_pwd";
-		}
-		m.addAttribute("msg", "验证码不正确！");
-		return "/front/user/forget_pwd";
+	public String doForgetpwd(){
+		ActionContext context = ActionContext.getContext();
+		context.put("email",user.getEmail());
+		if(us.captchaEqual(user)){
+			context.put("captcha", user.getCaptcha());
+			return "toReset_Pwd";
+		};
+		context.put("msg", "验证码不正确！");
+		return "toForget_pwd";
 	}
 	
-	@RequestMapping("/sendemail.action")
-	@ResponseBody
-	public Data sendemail(User u){
-		Data data = new Data();
-		data.setSuccess(us.sendEmail(u));
+	public String sendemail(){
+		data.setSuccess(us.sendEmail(user));
 		data.setMessage("该邮箱不存在！");
-		return data;
+		return "data";
 	}
 	
-	@RequestMapping("/resetpwd.action")
-	public String resetPwd(User u){
-		us.resetPwd(u);
-		return "redirect:/front/indexFront.action";
+	public String resetpwd(){
+		us.resetPwd(user);
+		return "toIndexR";
 	}
 	
-	@RequestMapping("/index.action")
-	public String userInfo(){
-		return "/front/user/index";
+	public String index(){
+		return "toUserIndex";
 	}
 	
-	
-	@RequestMapping(value="/profile.action",method=RequestMethod.GET)
 	public String profile(){
-		return "/front/user/profile";
+		user = (User) ActionContext.getContext().getSession().get("user");
+		return "toUserProfile";
 	}
 	
-	@RequestMapping(value="/profile.action",method=RequestMethod.POST)
-	public String updataProfile(User u,HttpSession session){
-		session.setAttribute("user", us.updataProfile(u));
-		return "redirect:/front/user/index.action";
+	public String updateProfile(){
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		user = us.updateProfile(user);
+		session.put("_front_user", user);
+		session.put("user", user);
+		return "toUserProfileR";
 	}
 	
-	@RequestMapping(value="/password.action",method=RequestMethod.GET)
-	public String userPassword(){
-		return "/front/user/password";
+	public String password(){
+		return "toUserPwd";
 	}
 	
-	@RequestMapping(value="/password.action",method=RequestMethod.POST)
-	public String userUpdataPWd(User u,Model m){
-		if(us.updataPwd(u)){
-			return "redirect:/front/logout.action";
-		}
-		m.addAttribute("pwdmsg", "密码错误！");
-		return "/front/user/password";
+	public String updatePassword(){
+		ActionContext context = ActionContext.getContext();
+		if(us.updatePwd(user)){
+			return "toUserProfileR";
+		};
+		context.put("pwdmsg", "原始密码错误！");
+		return "toUserPwd";
 	}
 	
-	@RequestMapping(value="/avatar.action",method=RequestMethod.GET)
-	public String userAvatar(){
-		return "/front/user/avatar";
+	public String avatar(){
+		return "toUserAvatar";
 	}
 	
-	@RequestMapping(value="/avatar.action",method=RequestMethod.POST)
-	public String userUpdataAvatar(User u,MultipartFile image_file,HttpSession session) throws Exception{
-		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-		String extension = FilenameUtils.getExtension(image_file.getOriginalFilename());
-		String fileName = uuid + "." + extension;
-		String pathname = "D:\\upload";
-		u.setHeadUrl("upload/"+fileName);
-		image_file.transferTo(new File(pathname+"\\"+fileName));
-		session.setAttribute("user", us.updataAvatar(u));
-		return "redirect:/front/user/index.action";
+	public String uploadAvatar() throws IOException{
+		String filename = UUID.randomUUID().toString().replaceAll("-", "");
+		String extension = FilenameUtils.getExtension(image_fileFileName);
+		String fileAllName = filename+"."+extension;
+		FileUtils.copyFile(new File(image_file.getAbsolutePath()), new File("d:\\upload\\"+fileAllName));
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		user.setHeadUrl("upload/"+fileAllName);
+		user = us.updateAvatarInfo(user);
+		session.put("_front_user", user);
+		session.put("user", user);
+		return "toUserAvatar";
 	}
-	*/
 }

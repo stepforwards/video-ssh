@@ -44,7 +44,7 @@
                             <p style="text-align: center;">当前头像</p>
                         </div>
                         <div class="profile_ifo_area">
-                            <form id="upload_form" enctype="multipart/form-data" method="post" action="<c:url value="/front/user/avatar.action"/>" >
+                            <form id="upload_form" enctype="multipart/form-data" method="post" action="<c:url value="/front/user/uploadAvatar.action"/>" >
                                 <p>请选择图像文件</p>
                                 <div>
                                 <input type="hidden" name="id" value="${user.id}" >

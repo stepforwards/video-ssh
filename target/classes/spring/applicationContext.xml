@@ -49,6 +49,9 @@
 		<tx:method name="delete*" isolation="REPEATABLE_READ" read-only="false" propagation="REQUIRED"/>
 		<tx:method name="update*" isolation="REPEATABLE_READ" read-only="false" propagation="REQUIRED"/>
 		<tx:method name="add*" isolation="REPEATABLE_READ" read-only="false" propagation="REQUIRED"/>
+		<tx:method name="userRegist" isolation="REPEATABLE_READ" read-only="false" propagation="REQUIRED"/>
+		<tx:method name="sendEmail" isolation="REPEATABLE_READ" read-only="false" propagation="REQUIRED"/>
+		<tx:method name="resetPwd" isolation="REPEATABLE_READ" read-only="false" propagation="REQUIRED"/>
 	</tx:attributes>
 </tx:advice>
 

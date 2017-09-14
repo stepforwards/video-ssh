@@ -9,7 +9,7 @@
 
 		<c:if test="${not empty _front_user}">
 			<div id="userBlock" style="float:right">
-				<a href="/video/front/user/logout.action">退出</a>
+				<a href="<c:url value="/front/user/logout.action"/>">退出</a>
 				<a href="<c:url value="/front/user/index.action"/>" id="account">${sessionScope._front_user.email }</a>
 			</div>
 		</c:if>
