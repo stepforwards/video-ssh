@@ -1,6 +1,8 @@
 package com.forward.video_ssh.dao.impl;
 
 
+import java.sql.Date;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +96,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 
 	@Override
 	public void updateUserCaptcha(User u) {
+		u.setUpdateTime(new Date(System.currentTimeMillis()));
 		getHibernateTemplate().update(u);
 	}
 
@@ -127,6 +130,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 	@Override
 	public User updatePwd(User u) {
 		User user = getHibernateTemplate().get(User.class, u.getId());
+		user.setUpdateTime(new Date(System.currentTimeMillis()));
 		if(user.getPassword().equals(u.getOldPassword())){
 			user.setPassword(u.getNewPassword());
 			return user;
@@ -137,6 +141,7 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao {
 	@Override
 	public User updateAvatarInfo(User user) {
 		User u = getHibernateTemplate().get(User.class, user.getId());
+		u.setUpdateTime(new Date(System.currentTimeMillis()));
 		u.setHeadUrl(user.getHeadUrl());
 		return u;
 	}

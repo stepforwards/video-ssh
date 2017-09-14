@@ -1,5 +1,6 @@
 package com.forward.video_ssh.dao.impl;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -44,6 +45,7 @@ public class SpeakerDaoImpl extends HibernateDaoSupport implements SpeakerDao {
 
 	@Override
 	public void insert(Speaker speaker) {
+		speaker.setInsertTime(new Date(System.currentTimeMillis()));
 		getHibernateTemplate().save(speaker);
 	}
 
@@ -84,6 +86,7 @@ public class SpeakerDaoImpl extends HibernateDaoSupport implements SpeakerDao {
 
 	@Override
 	public void updateByPrimaryKey(Speaker speaker) {
+		speaker.setUpdateTime(new Date(System.currentTimeMillis()));
 		getHibernateTemplate().update(speaker);
 	}
 

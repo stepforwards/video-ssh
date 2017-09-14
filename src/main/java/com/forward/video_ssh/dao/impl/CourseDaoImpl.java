@@ -1,5 +1,6 @@
 package com.forward.video_ssh.dao.impl;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -37,6 +38,7 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao {
 
 	@Override
 	public void insert(Course course) {
+		course.setInsertTime(new Date(System.currentTimeMillis()));
 		getHibernateTemplate().save(course);
 	}
 
@@ -77,6 +79,7 @@ public class CourseDaoImpl extends HibernateDaoSupport implements CourseDao {
 
 	@Override
 	public void updateByPrimaryKey(Course course) {
+		course.setUpdateTime(new Date(System.currentTimeMillis()));
 		getHibernateTemplate().update(course);
 	}
 

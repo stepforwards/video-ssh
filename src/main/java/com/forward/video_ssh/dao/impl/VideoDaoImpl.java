@@ -1,5 +1,6 @@
 package com.forward.video_ssh.dao.impl;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -59,8 +60,9 @@ public class VideoDaoImpl extends HibernateDaoSupport implements VideoDao {
 	}
 
 	@Override
-	public void insert(Video record) {
-		getHibernateTemplate().save(record);
+	public void insert(Video video) {
+		video.setInsertTime(new Date(System.currentTimeMillis()));
+		getHibernateTemplate().save(video);
 	}
 
 	@Override
@@ -101,6 +103,7 @@ public class VideoDaoImpl extends HibernateDaoSupport implements VideoDao {
 
 	@Override
 	public int updateByPrimaryKey(Video video) {
+		video.setUpdateTime(new Date(System.currentTimeMillis()));
 		getHibernateTemplate().update(video);
 		return 0;
 	}
