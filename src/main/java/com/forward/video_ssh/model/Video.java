@@ -26,9 +26,18 @@ public class Video {
     private Date updateTime;
 
     private Integer videoPlayTimes;
+    private String videoTimeLength;
     
-    
-    private Speaker speaker;
+	public String getVideoTimeLength() {
+		videoTimeLength = VideoLengthFormatUtil.formatTimeLength(videoLength);
+		return videoTimeLength;
+	}
+
+	public void setVideoTimeLength(String videoTimeLength) {
+		this.videoTimeLength = videoTimeLength;
+	}
+
+	private Speaker speaker;
     private Course course;
     
     
@@ -100,8 +109,8 @@ public class Video {
         this.courseId = courseId;
     }
 
-    public String getVideoLength() {
-        return VideoLengthFormatUtil.formatTimeLength(videoLength);
+    public Integer getVideoLength() {
+        return videoLength;
     }
 
     public void setVideoLength(Integer videoLength) {

@@ -56,8 +56,9 @@ public class FrontVideoAction extends ActionSupport implements ModelDriven<Video
 	}
 	
 	
-	public void state(){
+	public String state(){
 		vs.updateVideoStateById(videoId);
+		return null;
 	}
 	
 	public String videoData(){

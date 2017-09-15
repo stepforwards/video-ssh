@@ -61,7 +61,7 @@ public class VideoDaoImpl extends HibernateDaoSupport implements VideoDao {
 
 	@Override
 	public void insert(Video video) {
-		video.setInsertTime(new Date(System.currentTimeMillis()));
+		//video.setInsertTime(new Date(System.currentTimeMillis()));
 		getHibernateTemplate().save(video);
 	}
 
@@ -152,7 +152,7 @@ public class VideoDaoImpl extends HibernateDaoSupport implements VideoDao {
 
 	@Override
 	public void updateVideoStateById(String videoId) {
-		Video video = getHibernateTemplate().get(Video.class,Integer.parseInt(videoId));
+		Video video = getHibernateTemplate().get(Video.class, Integer.parseInt(videoId));
 		video.setVideoPlayTimes(video.getVideoPlayTimes()+1);
 	}
 

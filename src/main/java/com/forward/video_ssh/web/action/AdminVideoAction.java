@@ -37,16 +37,17 @@ public class AdminVideoAction extends ActionSupport implements ModelDriven<Video
 	public void setIds(String[] ids) {
 		this.ids = ids;
 	}
+	
 	public Integer getPage() {
 		return page;
 	}
 	public void setPage(Integer page) {
 		this.page = page;
 	}
+	
 	public KeyVO getKvo() {
 		return kvo;
 	}
-
 	public void setKvo(KeyVO kvo) {
 		this.kvo = kvo;
 	}
@@ -73,6 +74,7 @@ public class AdminVideoAction extends ActionSupport implements ModelDriven<Video
 	}
 
 	public String doAddVideo() {
+		System.out.println(video);
 		vs.saveVideo(video);
 		return "toVideoAction";
 	}
@@ -102,7 +104,6 @@ public class AdminVideoAction extends ActionSupport implements ModelDriven<Video
 		vs.updateVideoById(video);
 		return "toVideoAction";
 	}
-	
 
 	@Override
 	public Video getModel() {

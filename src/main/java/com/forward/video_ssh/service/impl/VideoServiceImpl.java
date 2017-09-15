@@ -71,7 +71,6 @@ public class VideoServiceImpl implements VideoService {
 	@Override
 	public void updateVideoStateById(String videoId) {
 		vd.updateVideoStateById(videoId);
-		
 	}
 
 	@Override
